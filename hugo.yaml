@@ -32,3 +32,8 @@ params:
   footer:
     displayCopyright: false
     displayPoweredBy: true
+
+  highlight:
+    copy:
+      enable: true
+      display: hover
