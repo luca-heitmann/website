@@ -1,0 +1,25 @@
+baseURL: https://luca-heitmann.de/
+languageCode: de-DE
+title: Luca Marco Heitmann
+
+menu:
+  main:
+    - name: Self-Hosting
+      pageRef: selfhosting
+      weight: 1
+    - name: About
+      pageRef: /about
+      weight: 2
+    - name: Search
+      weight: 3
+      params:
+        type: search
+    - name: GitHub
+      weight: 4
+      url: "https://github.com/luca-heitmann/website"
+      params:
+        icon: github
+
+module:
+  imports:
+    - path: github.com/imfing/hextra
