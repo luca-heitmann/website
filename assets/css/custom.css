@@ -1,5 +1,5 @@
 /** Custom link style **/
-.content{
+.content {
   a,
   a:visited {
       color: #ffffff;
@@ -16,7 +16,6 @@
       -webkit-text-decoration-color: rgba(255,255,255,1);
   }
 }
-
 
 /* Reset link styling inside hextra-cards to avoid global 'a' styles */
 .hextra-cards a,
