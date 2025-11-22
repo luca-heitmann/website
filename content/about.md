@@ -1,11 +1,12 @@
 ---
-date: '2025-11-21T22:17:50+01:00'
 title: 'About'
 type: about
+toc: false
 ---
 
-### Credits
+# Credits
 
 built with the following tools:
+
 - [Hugo](https://gohugo.io)
 - [Hextra](https://imfing.github.io/hextra/)

@@ -1,6 +1,5 @@
 ---
-date: '2025-11-21T22:06:22+01:00'
-title: 'Vorbereitung'
+title: 'Preparation'
 ---
 
 Hier folgt die Vorbereitung für den Self-Hosting Workshop
