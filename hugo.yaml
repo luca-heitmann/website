@@ -35,6 +35,8 @@ markup:
     noClasses: false
 
 params:
+  externalLinkDecoration: true
+  
   navbar:
     displayTitle: false
     logo:
@@ -44,7 +46,7 @@ params:
       height: 20
 
   footer:
-    displayCopyright: false
+    displayCopyright: true
     displayPoweredBy: false
 
   highlight:
