@@ -38,7 +38,7 @@ params:
   navbar:
     displayTitle: false
     logo:
-      path: favicon.svg
+      path: favicon-dark.svg
       dark: favicon-dark.svg
       width: 40
       height: 20
@@ -51,3 +51,7 @@ params:
     copy:
       enable: true
       display: hover
+
+  theme:
+    default: dark
+    displayToggle: false
