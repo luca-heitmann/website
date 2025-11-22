@@ -6,22 +6,40 @@ title: 'Host It Yourself: Raspberry Pi Edition'
 
 ### Step 1: Podman Basics
 
-This is the first step.
+- Local Deployment of Traefik
+- Creation of Git Repository for storing compose files
+- Basics about containers
 
 ### Step 2: Excalidraw
 
-This is the second step.
+- Simple Excalidraw deployment using compose
+- compose spec
 
 ### Step 3: Setting up the Raspberry Pi
 
-This is the third step.
+- Creating the SD Card with Ubuntu Server
+- Configuration using cloud-init
+- Configuring DNS and port forwarding
 
-### Step 4: CouchDB for Obsidian
+### Step 4: OwnCloud Infinite Scale
 
-### Step 5: OwnCloud Infinite Scale
+- Deployment of OCIS locally
+- Creation of backup and restore scripts
+- Productive deployment
 
-### Step 6: Productive Deployment
+### Step 5: Ente, CouchDB or Vaultwarden?
 
-### Step 7: What’s Next?
+- Exercise
+- Creation of deployment scripts alone
+
+### Step 6: What’s Next?
+
+- Ente Photos
+- CouchDB for Obsidian
+- Jellyfin
+- n8n
+- Gitea
+- self-hosted LLM?
+- [OpenAlternative](https://openalternative.co/self-hosted) [Awesome-Selfhosted](https://awesome-selfhosted.net/)
 
 {{% /steps %}}
