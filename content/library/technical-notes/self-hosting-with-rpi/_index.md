@@ -1,6 +1,8 @@
 ---
-title: 'Single Raspberry PI Setup'
+title: 'Host It Yourself: Raspberry Pi Edition'
 ---
+
+
 
 {{% steps %}}
 

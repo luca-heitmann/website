@@ -17,6 +17,6 @@ When I'm not buried in code or datasets, you'll find me exploring new tech, tink
 ## Overview
 
 {{< cards >}}
-  {{< card link="library/selfhosting" title="Self-Hosting" icon="book-open" >}}
+  {{< card link="library/technical-notes/self-hosting-with-rpi" title="Host It Yourself: RPi Edition" icon="book-open" >}}
   {{< card link="library/technical-notes/tools" title="Tools I Use" icon="terminal" >}}
 {{< /cards >}}
