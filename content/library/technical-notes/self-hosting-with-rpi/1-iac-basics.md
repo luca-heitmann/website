@@ -143,9 +143,7 @@ git commit -m "Add Caddy reverse proxy and update compose files for HTTPS suppor
 git push
 ```
 
-## Conclusion
-
-Key Take-Aways:
+## Key Take-Aways
 
 - IaC & Version Control: All deployment configuration is managed as Code within Git.
 - Container Deployment: Successful deployment of static web applications (like BentoPDF) using Podman Compose.
