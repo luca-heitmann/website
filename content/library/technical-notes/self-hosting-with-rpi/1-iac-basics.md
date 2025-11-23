@@ -61,7 +61,7 @@ The configuration for domain routing is stored in the `compose.yml` file as labe
 podman info --format '{{.Host.RemoteSocket.Path}}' | sed 's/unix:\/\///'
 ```
 
-If you don't use Podman Machine or Desktop, you may need to enable the socket service first: [Socket Activation Guide](https://github.com/containers/podman/blob/main/docs/tutorials/socket_activation.md#socket-activation-of-the-api-service)
+You may need to enable the socket service first: [Socket Activation Guide](https://github.com/containers/podman/blob/main/docs/tutorials/socket_activation.md#socket-activation-of-the-api-service)
 
 Now, create the compose.yml file for Caddy. Replace `YOUR_SOCKET_HERE` with the path from the previous command:
 
