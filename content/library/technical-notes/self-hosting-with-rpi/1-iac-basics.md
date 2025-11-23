@@ -113,7 +113,7 @@ networks:
 
 For testing, you can use the `example.com` domain by adding the following entry to `/etc/hosts`:
 
-```
+```{filename="/etc/hosts"}
 127.0.0.1 pdf.example.com
 ```
 
