@@ -4,35 +4,30 @@ title: 'Host It Yourself: Raspberry Pi Edition'
 
 {{% steps %}}
 
-### Step 1: Podman Basics
+### Step 1: IaC Basics
 
-- Local Deployment of Traefik
 - Creation of Git Repository for storing compose files
+- Simple Traefik and excalidraw deployment using compose
 - Basics about containers
 
-### Step 2: Excalidraw
-
-- Simple Excalidraw deployment using compose
-- compose spec
-
-### Step 3: Setting up the Raspberry Pi
+### Step 2: Setting up the Raspberry Pi
 
 - Creating the SD Card with Ubuntu Server
 - Configuration using cloud-init
 - Configuring DNS and port forwarding
 
-### Step 4: OwnCloud Infinite Scale
+### Step 3: Deploying OwnCloud Infinite Scale
 
 - Deployment of OCIS locally
 - Creation of backup and restore scripts
 - Productive deployment
 
-### Step 5: Ente, CouchDB or Vaultwarden?
+### Step 4: Ente, CouchDB or Vaultwarden?
 
 - Exercise
 - Creation of deployment scripts alone
 
-### Step 6: What’s Next?
+### Step 5: What’s Next?
 
 - Ente Photos
 - CouchDB for Obsidian
