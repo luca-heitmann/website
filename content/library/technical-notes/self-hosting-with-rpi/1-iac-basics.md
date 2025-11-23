@@ -3,9 +3,17 @@ title: 'IaC Basics'
 weight: 1
 ---
 
+In the first chapter, we explore how to deploy a static web application locally on your laptop. The deployment process is fully defined in code and synchronized with a Git repository. This approach is known as Infrastructure as Code (IaC).
+
+Instead of manually installing and configuring applications, we declare the entire deployment in YAML files and use Podman Compose to handle the setup automatically. IaC offers significant advantages, including:
+
+- Consistency: The environment is fully reproducible. You can develop and test the deployment on your laptop and later deploy it to any other machine without discrepancies.
+- Automation: If something breaks, you can quickly recreate the environment with minimal effort.
+- Version Control: Rollbacks are straightforward because the complete configuration history is stored in Git, allowing you to revert to any previous state if needed.
+
 ## Repository for Configuration
 
-1. Install [Podman](https://podman.io/) or [Podman Desktop](https://podman-desktop.io/) on your development machine
+1. Install [Podman](https://podman.io/) on your development machine (initialize the podman machine if you are on MacOS or Windows: [Installation Docs](https://podman.io/docs/installation))
 2. Install [Git](https://git-scm.com/)
 3. Create an account for hosting a repository at [Codeberg](https://codeberg.org/) and configure SSH login
 4. Create and clone a repository to store the homelab configuration
@@ -114,6 +122,7 @@ networks:
 For testing, you can use the `example.com` domain by adding the following entry to `/etc/hosts`:
 
 ```{filename="/etc/hosts"}
+# ... the rest of the file ...
 127.0.0.1 pdf.example.com
 ```
 
@@ -133,3 +142,11 @@ git add .
 git commit -m "Add Caddy reverse proxy and update compose files for HTTPS support"
 git push
 ```
+
+## Conclusion
+
+Key Take-Aways:
+
+- IaC & Version Control: All deployment configuration is managed as Code within Git.
+- Container Deployment: Successful deployment of static web applications (like BentoPDF) using Podman Compose.
+- Secure Connectivity (Caddy): Implementation of the Caddy Reverse Proxy to automatically handle HTTPS encryption and domain routing for all deployed services.
