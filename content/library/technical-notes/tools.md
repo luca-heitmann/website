@@ -27,7 +27,7 @@ title: "Tools I Use"
 
 - IaC: [Ansible](https://www.redhat.com/en/ansible-collaborative)
 - Container Orchestration: [Kubernetes](https://kubernetes.io/)
-- Secret Manager: [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
+- Password Manager: [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 - File Storage: [NextCloud](https://nextcloud.com/) (currently migrating to [Infinite Scale](https://owncloud.com/infinite-scale/))
 - Obsidian Database: [CouchDB](https://couchdb.apache.org/)
 - ...as well as some custom-built tools

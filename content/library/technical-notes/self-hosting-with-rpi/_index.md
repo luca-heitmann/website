@@ -4,28 +4,28 @@ title: 'Host It Yourself: Raspberry Pi Edition'
 
 {{% steps %}}
 
-### Step 1: IaC Basics
+### [IaC Basics](1-iac-basics)
 
 - Creation of Git Repository for storing compose files
-- Simple Traefik and excalidraw deployment using compose
-- Basics about containers
+- Simple Caddy and BentoPDF deployment using Podman
 
-### Step 2: Setting Up the Home Lab
+### [Setting Up the Home Lab](2-setup-homelab)
 
 - Creating the SD Card with Ubuntu Server
 - Configuration using cloud-init
 - Configuring DNS and port forwarding
+- Deploy static web apps
 
-### Step 3: Deploying OwnCloud Infinite Scale
+### [Deploying OwnCloud Infinite Scale](3-deploy-cloud)
 
 - Deployment of OCIS locally
 - Creation of backup and restore scripts
 - Productive deployment
-- Exercise: Ente, CouchDB or Vaultwarden?
+- Exercise: Vaultwarden
 
 {{% /steps %}}
 
-What’s Next?
+What's Next?
 
 - Ente Photos
 - CouchDB for Obsidian
