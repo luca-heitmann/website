@@ -1,5 +1,5 @@
 ---
-title: 'Podman Basics'
+title: 'IaC Basics'
 weight: 1
 ---
 

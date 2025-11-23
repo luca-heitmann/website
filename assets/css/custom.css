@@ -1,36 +1,23 @@
-/** Custom link style **/
 .content {
-  a,
-  a:visited {
-      color: #ffffff;
-      text-decoration: underline;
-      text-decoration-color: rgba(255,255,255,0.4);
-      -webkit-text-decoration-color: rgba(255,255,255,0.4);
-  }
-  
-  a:hover,
-  a:active {
-      color: #ffffff;
-      text-decoration: underline;
-      text-decoration-color: rgba(255,255,255,1);
-      -webkit-text-decoration-color: rgba(255,255,255,1);
-  }
+  --link-rgb: 0, 0, 0;
+  --link-opacity: 0.4;
+  --link-hover-opacity: 1;
 }
 
-/* Reset link styling inside hextra-cards to avoid global 'a' styles */
-.hextra-cards a,
-.hextra-cards a:visited {
-  color: inherit;
-  text-decoration: none;
-  text-decoration-color: initial;
-  -webkit-text-decoration-color: initial;
+.content:where(.dark, .dark *) {
+  --link-rgb: 255, 255, 255;
 }
 
-.hextra-cards a:hover,
-.hextra-cards a:active {
-  color: inherit;
-  text-decoration: none;
-  text-decoration-color: initial;
-  -webkit-text-decoration-color: initial;
+.content a:not(:where(.not-prose, .not-prose *)) {
+  color: rgb(var(--link-rgb));
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--link-rgb), var(--link-opacity));
+  -webkit-text-decoration-color: rgba(var(--link-rgb), var(--link-opacity));
+  transition: text-decoration-color 160ms ease, color 160ms ease;
 }
-/** Custom dark background color **/
+
+.content a:not(:where(.not-prose, .not-prose *)):is(:hover, :active) {
+  color: rgb(var(--link-rgb));
+  text-decoration-color: rgba(var(--link-rgb), var(--link-hover-opacity));
+  -webkit-text-decoration-color: rgba(var(--link-rgb), var(--link-hover-opacity));
+}
