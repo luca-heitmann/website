@@ -102,7 +102,7 @@ Start Caddy with `podman-compose up -d` and check the logs with `podman-compose 
 
 Next, update the `bentopdf/compose.yml` file to specify the routing configuration:
 
-```yaml{linenos=table,hl_lines=[5,6,7,8,9,10,12,13,14],filename="bentopdf/compose.yml"}
+```yaml{linenos=table,hl_lines=[5,6,7,8,9,10,11,12,13,14],filename="bentopdf/compose.yml"}
 services:
   bentopdf:
     image: bentopdf/bentopdf-simple
@@ -134,6 +134,11 @@ Your task: Update the `compose.yml` files for all your applications and verify t
 
 > [!TIP]
 > You need to change the subdomain name and the port in the labels.
+
+
+## Refactoring
+
+The final codebase should look like this: https://codeberg.org/luca-heitmann/homelab-playground
 
 Once everything is working, push your changes to the Git repository:
 
