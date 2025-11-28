@@ -162,7 +162,7 @@ The `CLUSTER_DOMAIN` variable makes it easy to switch to another domain for the 
 
 Now create a compose.yml file for the development system:
 
-```bash{linenos=table,hl_lines=[2],filename="dev.compose.yml"}
+```yamlys{linenos=table,hl_lines=[2],filename="dev.compose.yml"}
 #!/usr/bin/env -S podman-compose --env-file .env.dev -f 
 name: dev-homelab
 
@@ -179,7 +179,7 @@ You can change the name of the stack, but it should contain the environment name
 
 The first line contains a hashbang, which defines the interpreter used to execute the file. We can use this to shorten the podman-compose command. Since we created the environment file, it needs to be loaded with an argument, so the final command would look like this: `podman-compose --env-file .env.dev -f dev.compose.yml up -d`. Before this is possible, the executable flag needs to be set for the dev.compose.yml file:
 
-```
+```bash
 chmod +x dev.compose.yml
 ./dev.compose.yml up -d
 ./dev.compose.yml down
@@ -224,7 +224,7 @@ Try to start the stack again by running `./dev.compose.yml up -d` and see if eve
 
 Push your changes to the Git repository:
 
-```
+```bash
 git add .
 git commit -m "BentoPDF and Caddy Deployment"
 git push
