@@ -24,7 +24,7 @@ We are going to deploy our first tool: [BentoPDF](https://github.com/alam00000/b
 
 Create the following file in your Git repository:
 
-```yaml{linenos=table,filename="bentopdf/compose.yml"}
+```yaml{linenos=table,filename="src/bentopdf/compose.yml"}
 services:
   bentopdf:
     image: bentopdf/bentopdf-simple
@@ -33,7 +33,7 @@ services:
       - 3100:8080
 ```
 
-Start the application with this command:
+Open a terminal, navigate to the bentopdf directory and start the application with this command:
 
 ```bash
 podman-compose up -d
@@ -61,7 +61,7 @@ Your task: Choose one of the following apps, create a `compose.yml` file like th
 
 ## Reverse Proxy with Caddy
 
-Now we need a reverse proxy to encrypt the network connection with HTTPS and handle domain resolution, allowing you to access the application via https://bentopdf.example.com. This can be achieved using [Caddy](https://caddyserver.com/).
+Now we need a reverse proxy to encrypt the network connection with HTTPS and handle domain resolution, allowing you to access the application via https://pdf.homelab.internal. This can be achieved using [Caddy](https://caddyserver.com/).
 
 The configuration for domain routing is stored in the `compose.yml` file as labels. For Caddy to route network traffic, it needs access to Podman to read these labels. To grant this access, you need the path to the Podman socket. Use this command to find it:
 
@@ -73,26 +73,22 @@ You may need to enable the socket service first: [Socket Activation Guide](https
 
 Now, create the compose.yml file for Caddy. Replace `YOUR_SOCKET_HERE` with the path from the previous command:
 
-```yaml{linenos=table,hl_lines=[14],linenostart=1,filename="caddy/compose.yml"}
+```yaml{linenos=table,hl_lines=[12],linenostart=1,filename="src/caddy/compose.yml"}
 services:
   caddy:
     image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    restart: unless-stopped
+    privileged: true
     ports:
       - 8443:443/tcp
       - 8443:443/udp
     environment:
-      - CADDY_INGRESS_NETWORKS=caddy_caddy
-      - TZ=Europe/Berlin
-    networks:
-      - caddy
-    privileged: true
+      TZ: Europe/Berlin
     volumes: 
       - YOUR_SOCKET_HERE:/var/run/docker.sock
       - caddy_data:/data
-    restart: unless-stopped
-
-networks:
-  caddy:
+    labels:
+      caddy.local_certs: true
 
 volumes:
   caddy_data: {}
@@ -102,31 +98,24 @@ Start Caddy with `podman-compose up -d` and check the logs with `podman-compose 
 
 Next, update the `bentopdf/compose.yml` file to specify the routing configuration:
 
-```yaml{linenos=table,hl_lines=[5,6,7,8,9,10,11,12,13,14],filename="bentopdf/compose.yml"}
+```yaml{linenos=table,hl_lines=[5,6,7],filename="src/bentopdf/compose.yml"}
 services:
   bentopdf:
     image: bentopdf/bentopdf-simple
     restart: unless-stopped
-    networks:
-      - caddy_caddy
     labels:
-      caddy: pdf.example.com
+      caddy: pdf.homelab.internal
       caddy.reverse_proxy: "{{upstreams 8080}}"
-      caddy.tls: internal
-
-networks:
-  caddy_caddy:
-    external: true
 ```
 
-For testing, you can use the `example.com` domain by adding the following entry to `/etc/hosts`:
+For testing, you can use the `homelab.internal` domain by adding the following entry to `/etc/hosts`:
 
 ```{filename="/etc/hosts"}
 # ... the rest of the file ...
-127.0.0.1 pdf.example.com
+127.0.0.1 pdf.homelab.internal
 ```
 
-Since Podman runs rootless, it cannot bind to port 443. Instead, we use 8443. Your application will now be available at: https://pdf.example.com:8443.
+Since Podman runs rootless, it cannot bind to port 443. Instead, we use 8443. Your application will now be available at: https://pdf.homelab.internal:8443.
 
 Caddy generates a self-signed certificate, which you will need to accept in your browser.
 
@@ -138,13 +127,106 @@ Your task: Update the `compose.yml` files for all your applications and verify t
 
 ## Refactoring
 
-The final codebase should look like this: https://codeberg.org/luca-heitmann/homelab-playground
+First, run `podman-compose down` on any running service.
 
-Once everything is working, push your changes to the Git repository:
+As repeating these Podman commands is inconvenient, create a compose.yml that includes all services:
+
+```yaml{linenos=table,filename="src/compose.yml"}
+include:
+  - caddy/compose.yml
+  - bentopdf/compose.yml
+```
+
+To store the configuration, create an .env file for the development environment:
+
+```bash{linenos=table,hl_lines=[6],filename=".env.dev"}
+########### GENERAL ###########
+CLUSTER_DOMAIN=homelab.internal
+TZ=Europe/Berlin
+# Find socket path with the following command:
+# podman info --format '{{.Host.RemoteSocket.Path}}' | sed 's/unix:\/\///'
+DOCKER_SOCKET= # TODO: Add your socket here!
+
+
+########### CADDY ###########
+HTTPS_PORT=8443
+
+
+########### IMAGE VERSIONS ###########
+CADDY_IMAGE=lucaslorentz/caddy-docker-proxy:2.10-alpine # https://hub.docker.com/r/lucaslorentz/caddy-docker-proxy/tags?name=alpine
+BENTOPDF_IMAGE=bentopdf/bentopdf-simple:v1.9.0 # https://hub.docker.com/r/bentopdf/bentopdf-simple/tags
+```
+
+The `CLUSTER_DOMAIN` variable makes it easy to switch to another domain for the production system. Additionally, it's important to specify the versions of the images used. This way, the cluster setup is reproducible. Adapt the `TZ` variable to your timezone and the `DOCKER_SOCKET` variable as before.
+
+
+Now create a compose.yml file for the development system:
+
+```bash{linenos=table,hl_lines=[2],filename="dev.compose.yml"}
+#!/usr/bin/env -S podman-compose --env-file .env.dev -f 
+name: dev-homelab
+
+include:
+  - src/compose.yml
+
+services:
+  caddy:
+    labels:
+      caddy.local_certs: true
+```
+
+You can change the name of the stack, but it should contain the environment name (dev). The include statement loads the main Compose file, which includes the specific compose files of the individual services. Furthermore, we can add environment-specific variables for the development system. Here, we can add the label for Caddy to generate self-signed certificates, as our domain is only internally reachable.
+
+The first line contains a hashbang, which defines the interpreter used to execute the file. We can use this to shorten the podman-compose command. Since we created the environment file, it needs to be loaded with an argument, so the final command would look like this: `podman-compose --env-file .env.dev -f dev.compose.yml up -d`. Before this is possible, the executable flag needs to be set for the dev.compose.yml file:
+
+```
+chmod +x dev.compose.yml
+./dev.compose.yml up -d
+./dev.compose.yml down
+```
+
+Finally, the service compose files need to be adapted so they use the variables from the .env file:
+
+```yaml{linenos=table,hl_lines=[3,6],filename="src/bentopdf/compose.yml"}
+services:
+  bentopdf:
+    image: ${BENTOPDF_IMAGE}
+    restart: unless-stopped
+    labels:
+      caddy: pdf.${CLUSTER_DOMAIN}
+      caddy.reverse_proxy: "{{upstreams 8080}}"
+```
+
+```yaml{linenos=table,hl_lines=[3,7,8,9,10,12,15],linenostart=1,filename="src/caddy/compose.yml"}
+services:
+  caddy:
+    image: ${CADDY_IMAGE}
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - ${HTTPS_PORT}:${HTTPS_PORT}/tcp
+      - ${HTTPS_PORT}:${HTTPS_PORT}/udp
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ${DOCKER_SOCKET}:/var/run/docker.sock
+      - caddy_data:/data
+    labels:
+      caddy.https_port: ${HTTPS_PORT}
+
+volumes:
+  caddy_data: {}
+```
+
+If you have additional services, adapt the Compose file accordingly. Don't forget to add an include statement to the `src/compose.yml`!
+
+Try to start the stack again by running `./dev.compose.yml up -d` and see if everything is working.
+
+Push your changes to the Git repository:
 
 ```
 git add .
-git commit -m "Add Caddy reverse proxy and update compose files for HTTPS support"
+git commit -m "BentoPDF and Caddy Deployment"
 git push
 ```
 
