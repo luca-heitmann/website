@@ -16,7 +16,7 @@ title: 'Host It Yourself: Raspberry Pi Edition'
 - Configuring DNS and port forwarding
 - Deploy static web apps
 
-### [Deploying OwnCloud Infinite Scale](3-deploy-cloud)
+### [File Server and Password Manager](3-deploy-cloud)
 
 - Deployment of OCIS locally
 - Creation of backup and restore scripts

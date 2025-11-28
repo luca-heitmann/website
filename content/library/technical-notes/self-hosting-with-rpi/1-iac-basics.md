@@ -122,7 +122,7 @@ Caddy generates a self-signed certificate, which you will need to accept in your
 Your task: Update the `compose.yml` files for all your applications and verify that everything works.
 
 > [!TIP]
-> You need to change the subdomain name and the port in the labels.
+> You need to change the subdomain name and the port in the labels. Additionally the new subdomain needs to be added to the `/etc/hosts` file.
 
 
 ## Refactoring
@@ -149,7 +149,9 @@ DOCKER_SOCKET= # TODO: Add your socket here!
 
 
 ########### CADDY ###########
+HTTP_PORT=8080
 HTTPS_PORT=8443
+ADMIN_EMAIL=admin@homelab.internal
 
 
 ########### IMAGE VERSIONS ###########
@@ -204,14 +206,18 @@ services:
     restart: unless-stopped
     privileged: true
     ports:
+      - ${HTTP_PORT}:${HTTP_PORT}/tcp
       - ${HTTPS_PORT}:${HTTPS_PORT}/tcp
       - ${HTTPS_PORT}:${HTTPS_PORT}/udp
     environment:
       TZ: ${TZ}
+      DOMAIN: https://${CLUSTER_DOMAIN}
+      EMAIL: ${ADMIN_EMAIL}
     volumes:
       - ${DOCKER_SOCKET}:/var/run/docker.sock
       - caddy_data:/data
     labels:
+      caddy.http_port: ${HTTP_PORT}
       caddy.https_port: ${HTTPS_PORT}
 
 volumes:

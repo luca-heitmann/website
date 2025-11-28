@@ -77,7 +77,7 @@ When the RaspberryPi is running, you might need to mount an external storage. Ha
 
 To access the HTTPS port on the RaspberryPi from the Internet, a dyndns is needed. This can be configured in the Router settings or alternatively with a small app on the RaspberryPi: [Configuring your dynDNS Client](https://desec.readthedocs.io/en/latest/dyndns/configure.html) If you run ddclient on the RaspberryPi, consider using compose for this as well: https://hub.docker.com/r/linuxserver/ddclient
 
-Add a port forwarding rule to your router to route port 443 to 8443 on the RaspberryPi. Have a look at the docs of the router: [Configuring static port sharing in the FRITZ!Box](https://fritz.com/en/apps/knowledge-base/FRITZ-Box-7590/893_Configuring-static-port-sharing-in-the-FRITZ-Box)
+Add a port forwarding rule to your router to route port 443 to 8443 and 80 to 8080 on the RaspberryPi. Make sure to create TCP and UDP rule for port 443. It is sufficient to only have a TCP rule for port 80. Have a look at the docs of the router: [Configuring static port sharing in the FRITZ!Box](https://fritz.com/en/apps/knowledge-base/FRITZ-Box-7590/893_Configuring-static-port-sharing-in-the-FRITZ-Box)
 
 An alternative to dyndns is using a [Cloudflare tunnel](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/). A domain can be created using [eu.org](https://nic.eu.org/) or by registering a custom domain name at any domain hosting service.
 
@@ -97,7 +97,9 @@ DOCKER_SOCKET= # TODO: Add your socket here!
 
 
 ########### CADDY ###########
+HTTP_PORT=8080
 HTTPS_PORT=8443
+ADMIN_EMAIL=admin@homelab.internal
 
 
 ########### IMAGE VERSIONS ###########
@@ -122,5 +124,3 @@ Push everything to the Git repository.
 Connect to the Raspberry Pi via SSH, navigate to the mount point of the external storage, e.g. /mnt/storage and clone your Git repository.
 
 Start the stack by running `./prod.compose.yml up -d` and see if the services are accessible via https://pdf.example.com respectively your domain.
-
-
