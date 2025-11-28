@@ -162,7 +162,7 @@ The `CLUSTER_DOMAIN` variable makes it easy to switch to another domain for the 
 
 Now create a compose.yml file for the development system:
 
-```yamlys{linenos=table,hl_lines=[2],filename="dev.compose.yml"}
+```yaml{linenos=table,hl_lines=[2],filename="dev.compose.yml"}
 #!/usr/bin/env -S podman-compose --env-file .env.dev -f 
 name: dev-homelab
 
