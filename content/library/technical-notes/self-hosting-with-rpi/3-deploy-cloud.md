@@ -201,13 +201,13 @@ Create a README file:
 
 Autostart with systemd:
 
-\```
-podman-compose systemd -a create-unit
-podman-compose systemd -a register
-loginctl enable-linger $USER
-systemctl --user daemon-reload
-systemctl --user enable --now podman-compose@<STACK_NAME>.service
-\```
+    ```
+    podman-compose systemd -a create-unit
+    podman-compose systemd -a register
+    loginctl enable-linger $USER
+    systemctl --user daemon-reload
+    systemctl --user enable --now podman-compose@<STACK_NAME>.service
+    ```
 
 To create a user for vaultwarden:
 
@@ -240,11 +240,11 @@ Access the services using the following URLs:
 
 For development it is neccessary to add these domains to /etc/hosts:
 
-\```
-127.0.0.1 pdf.<CLUSTER_DOMAIN>
-127.0.0.1 files.<CLUSTER_DOMAIN>
-127.0.0.1 vault.<CLUSTER_DOMAIN>
-\```
+    ```
+    127.0.0.1 pdf.<CLUSTER_DOMAIN>
+    127.0.0.1 files.<CLUSTER_DOMAIN>
+    127.0.0.1 vault.<CLUSTER_DOMAIN>
+    ```
 ```
 
 ## Deploy to Production
@@ -258,3 +258,5 @@ git pull
 ```
 
 Verify that OCIS and Vaultwarden are working as expected.
+
+The final repository should look like this: https://codeberg.org/luca-heitmann/homelab-playground
