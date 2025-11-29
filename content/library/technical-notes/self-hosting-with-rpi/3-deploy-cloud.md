@@ -164,8 +164,7 @@ Your task:
 3. Create a manual backup by running:
 
     ```bash
-    ./dev.compose.yml exec stack-back sh
-    rcb backup
+    ./dev.compose.yml exec stack-back rcb backup
     ```
 
 4. Delete the testing data in OCIS and vaultwarden
@@ -173,11 +172,9 @@ Your task:
 6. Restore the backup by running:
 
     ```bash
-    ./dev.compose.yml exec stack-back sh
-    restic snapshots
+    ./dev.compose.yml exec stack-back restic snapshots
     # find the latest snapshot ID and replace <LATEST_SNAPSHOT_ID> in the next command
-    restic restore -t /srv/restic-repo/restored-files <LATEST_SNAPSHOT_ID>
-    exit
+    ./dev.compose.yml exec stack-back restic restore -t /srv/restic-repo/restored-files <LATEST_SNAPSHOT_ID>
     ```
 
 7. Find the restored directories in `restored-files` in the backup dir
