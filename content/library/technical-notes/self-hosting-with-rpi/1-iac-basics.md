@@ -13,10 +13,11 @@ Instead of manually installing and configuring applications, we declare the enti
 
 ## Repository for Configuration
 
-1. Install [Podman](https://podman.io/) on your development machine (initialize the podman machine if you are on MacOS or Windows: [Installation Docs](https://podman.io/docs/installation))
-2. Install [Git](https://git-scm.com/)
-3. Create an account for hosting a repository at [Codeberg](https://codeberg.org/) and configure SSH login
-4. Create and clone a repository to store the homelab configuration
+1. Register a domain and point the nameservers to [Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/). A free subdomain can be configured using [DigitalPlat](https://domain.digitalplat.org/)
+2. Install [Podman](https://podman.io/) on your development machine (initialize the podman machine if you are on MacOS or Windows: [Installation Docs](https://podman.io/docs/installation))
+3. Install [Git](https://git-scm.com/)
+4. Create an account for hosting a repository at [Codeberg](https://codeberg.org/) and configure SSH login
+5. Create and clone a repository to store the homelab configuration
 
 ## BentoPDF Deployment
 
