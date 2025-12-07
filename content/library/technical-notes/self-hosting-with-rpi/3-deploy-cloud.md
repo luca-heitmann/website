@@ -19,33 +19,23 @@ services:
     environment:
       TZ: ${TZ}
       PROXY_TLS: false
-      OCIS_URL: https://files.${CLUSTER_DOMAIN}:${HTTPS_PORT}
+      OCIS_URL: https://cloud.${CLUSTER_DOMAIN}
+      OCIS_INSECURE: false
       OCIS_LOG_LEVEL: warn
       OCIS_LOG_PRETTY: true
     volumes:
       - ${OCIS_CONFIG}:/etc/ocis
       - ${OCIS_DATA}:/var/lib/ocis
     labels:
-      caddy: files.${CLUSTER_DOMAIN}
+      caddy: http://cloud.${CLUSTER_DOMAIN}
       caddy.reverse_proxy: "{{upstreams 9200}}"
+      caddy.reverse_proxy.header_up: "x-forwarded-proto HTTPS"
     secrets:
       - ocis_admin_password
 
 secrets:
   ocis_admin_password:
     file: ${OCIS_ADMIN_PASSWORD_FILE}
-```
-
-```{linenos=table,linenostart=1,filename=".gitignore"}
-.DS_Store
-
-secrets.*
-!secrets.dev
-data.dev
-backup.dev
-
-.env.testing
-testing.compose.yml
 ```
 
 ```{linenos=table,linenostart=1,filename="secrets.dev/OCIS_ADMIN_PASSWORD"}
@@ -71,22 +61,6 @@ OCIS_IMAGE=owncloud/ocis:7.3.1 # https://hub.docker.com/r/owncloud/ocis/tags
 include:
   # ... original content ...
   - ocis/compose.yml
-```
-
-```yaml{linenos=table,hl_lines=[11,12,13],filename="dev.compose.yml"}
-#!/usr/bin/env -S podman-compose --env-file .env.dev -f 
-name: dev-homelab
-
-include:
-  - src/compose.yml
-
-services:
-  caddy:
-    labels:
-      caddy.local_certs: true
-  ocis:
-    environment:
-      OCIS_INSECURE: true
 ```
 
 ## Vaultwarden Deployment
@@ -152,14 +126,14 @@ services:
   ocis:
     # ... original content ...
     labels:
-      caddy: files.${CLUSTER_DOMAIN}
+      caddy: cloud.${CLUSTER_DOMAIN}
       caddy.reverse_proxy: "{{upstreams 9200}}"
       stack-back.volumes: true
       stack-back.volumes.stop-during-backup: true
 ```
 
 Your task:
-1. Add the same labels to the vaultwarden container
+1. Add the same labels to the vaultwarden container and redeploy the stack
 2. Create some testing data in OCIS and vaultwarden
 3. Create a manual backup by running:
 
@@ -189,6 +163,14 @@ Create a README file:
 
 ## Initial Setup
 
+Create a new domain and a new Cloudflare tunnel:
+
+    ```bash
+    cloudflared login
+    cloudflared tunnel create prod-homelab
+    cloudflared tunnel route dns prod-homelab *.YOUR_PROD_DOMAIN.dpdns.org
+    ```
+
 1. Duplicate configuration files from dev environment and rename them
     - secrets.\<NAME>/*
     - .env.\<NAME>
@@ -216,32 +198,20 @@ To create a user for vaultwarden:
 Access the services using the following URLs:
 
 - PDF Tools: https://pdf.\<CLUSTER_DOMAIN>:\<HTTPS_PORT>
-- OCIS: https://files.\<CLUSTER_DOMAIN>:\<HTTPS_PORT>
+- OCIS: https://cloud.\<CLUSTER_DOMAIN>:\<HTTPS_PORT>
 - Vaultwarden: https://vault.\<CLUSTER_DOMAIN>:\<HTTPS_PORT>
 
 ## Trigger Manual Backup
 
-1. Run `<NAME>.compose.yml exec stack-back sh`
-2. Run `rcb backup`
+Run `<NAME>.compose.yml exec stack-back rcb backup`
 
 ## Restore a Backup
 
 1. Run `<NAME>.compose.yml down <SERVICE_NAME>`
-2. Run `<NAME>.compose.yml exec stack-back sh`
-    - `restic snapshots`
-    - `restic restore -t /srv/restic-repo/restored-files <SNAPSHOT_ID>`
-3. Manually replace the files from \<BACKUP_DIR>/restored-files to \<DATA_DIR>
-4. Run `<NAME>.compose.yml up -d <SERVICE_NAME>`
-
-## Development
-
-For development it is neccessary to add these domains to /etc/hosts:
-
-    ```
-    127.0.0.1 pdf.<CLUSTER_DOMAIN>
-    127.0.0.1 files.<CLUSTER_DOMAIN>
-    127.0.0.1 vault.<CLUSTER_DOMAIN>
-    ```
+2. Run `<NAME>.compose.yml exec stack-back restic snapshots`
+3. Run `<NAME>.compose.yml exec stack-back restic restic restore -t /srv/restic-repo/restored-files <SNAPSHOT_ID>`
+4. Manually replace the files from \<BACKUP_DIR>/restored-files to \<DATA_DIR>
+5. Run `<NAME>.compose.yml up -d <SERVICE_NAME>`
 ```
 
 ## Deploy to Production
