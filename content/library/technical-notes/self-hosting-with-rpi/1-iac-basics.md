@@ -17,7 +17,7 @@ Instead of manually installing and configuring applications, we declare the enti
 2. Install the following tools on your development machine:
     - [Podman](https://podman.io/) (initialize the podman machine if you are on MacOS or Windows: [Installation Docs](https://podman.io/docs/installation))
     - [Git](https://git-scm.com/)
-    - [Cloudflared](TODO) **TODO: add link for CF tunnel CLI**
+    - [Cloudflared](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/)
 3. Create an account at [Codeberg](https://codeberg.org/) (or GitHub), configure SSH login, create a repository to store the homelab configuration and clone this repository on your development machine
 
 ## Local Deployment of Static Web Apps

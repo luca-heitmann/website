@@ -29,7 +29,6 @@ What's Next?
 
 - Ente Photos
 - CouchDB for Obsidian
-- Vaultwarden
 - Jellyfin
 - n8n
 - Gitea

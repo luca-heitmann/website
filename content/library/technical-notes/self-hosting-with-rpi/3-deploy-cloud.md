@@ -5,6 +5,9 @@ weight: 3
 
 ## OCIS Deployment
 
+> [!NOTE]
+> The compose configuration is based on [ocis.yml](https://github.com/owncloud/ocis/blob/86c0d3b380e059a90bf8ec47e72b2d854d06e18e/deployments/examples/ocis_full/ocis.yml).
+
 ```yaml{linenos=table,linenostart=1,filename="src/ocis/compose.yml"}
 services:
   ocis:
@@ -120,6 +123,12 @@ include:
   # ... original content ...
   - stack-back/compose.yml
 ```
+
+> [!IMPORTANT]
+> Always verify how to create a consistent backup for each application. For OCIS the backup documentation can be found [here](https://doc.owncloud.com/ocis/next/maintenance/b-r/backup.html#general-considerations). It is important that the instance is shut down during the backup process.
+> 
+> For Vaultwarden see [Backing up your vault](https://github.com/dani-garcia/vaultwarden/wiki/Backing-up-your-vault). The recommended way to backup the SQLite database is to use a dump file. This is useful for creating a consistent backup while the database is active. If it is shut down, a simple file copy is also possible. See [SQLite documentation](https://www.sqlite.org/howtocorrupt.html#_backup_or_restore_while_a_transaction_is_active)
+
 
 ```yaml{linenos=table,hl_lines=[7,8],linenostart=1,filename="src/ocis/compose.yml"}
 services:
