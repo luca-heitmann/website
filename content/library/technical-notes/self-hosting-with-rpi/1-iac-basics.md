@@ -131,8 +131,6 @@ And open your browser at https://pdf.YOUR_SUBDOMAIN_NAME.dpdns.org
 
 Your task: Create a tunnel for accessing BentoPDF and the static web apps you deployed.
 
-<!--
-
 ### Restructuring the Compose files
 
 Die aktuelle Struktur der Konfiguration hat einige Nachteile:
@@ -294,6 +292,9 @@ Deine Aufgabe: Führe die Anpassungen durch und prüfe mit folgendem Befehl, ob 
 ```bash
 ./dev.compose.yml up -d
 ```
+
+
+<!--
 
 ### Routing with Caddy
 
