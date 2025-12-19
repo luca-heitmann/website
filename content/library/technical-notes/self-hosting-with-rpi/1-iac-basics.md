@@ -293,9 +293,6 @@ Deine Aufgabe: Führe die Anpassungen durch und prüfe mit folgendem Befehl, ob 
 ./dev.compose.yml up -d
 ```
 
-
-<!--
-
 ### Routing with Caddy
 
 Mithilfe von Caddy lassen sich die Routing-Regeln als Labels an den jeweiligen Services definieren. Das hat den Vorteil, dass nicht mehr die Konfiguration von Tunnel angepasst werden muss. Dazu legen wir zunächst eine Compose für Caddy an:
