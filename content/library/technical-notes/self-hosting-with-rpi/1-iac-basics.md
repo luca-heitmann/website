@@ -63,6 +63,8 @@ Your task: Choose one of the following apps, create a `compose.yml` file like th
 >
 > Only the values need to be changed; the structure remains the same.
 
+<!--
+
 ## Making the Services Accessible
 
 Die selbst gehosteten Services sollen natürlich nicht nur lokal laufen, sondern aus dem Internet zugreifbar sein. Dazu gibt es verschiedene Möglichkeiten:
