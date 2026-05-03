@@ -49,7 +49,7 @@
 			<ul>
 				<li>
 					<strong>Email:</strong>
-					<a href="mailto:mail@luca-heitmann.de">mail(at)luca-heitmann.de</a>
+					<p>mail (at) luca-heitmann.de</p>
 				</li>
 				<li>
 					<strong>GitHub:</strong>
