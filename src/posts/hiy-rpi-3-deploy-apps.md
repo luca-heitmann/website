@@ -240,3 +240,13 @@ git pull
 Verify that OCIS and Vaultwarden are working as expected.
 
 The final repository should look like this: https://codeberg.org/luca-heitmann/homelab-playground
+
+What’s Next?
+
+- Ente Photos
+- CouchDB for Obsidian
+- Jellyfin
+- n8n
+- Gitea
+- self-hosted LLM?
+- OpenAlternative Awesome-Selfhosted

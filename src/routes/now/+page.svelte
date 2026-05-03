@@ -24,8 +24,8 @@
 				Studying Data Science at Leipzig University and working as a Research
 				Assistant at Hochschule Hannover. On the side I'm training for the
 				<a href="https://www.dresden-marathon.com/en/" target="_blank" rel="noopener">Dresden Half-Marathon</a>
-				and getting into DJing. Otherwise you'll find me with friends in the
-				park, or in the library building this website.
+				and getting into DJing. Currently reading The 5 Types of Wealth by Sahil Bloom.
+				Otherwise you'll find me with friends in the park, or in the library building this website.
 			</p>
 			
 			<hr />
