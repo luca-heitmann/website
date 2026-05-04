@@ -12,6 +12,47 @@ type MdsvexModule = {
 	default: { render: () => { html: string } };
 };
 
+/**
+ * Strip Prism/line-number markup from rendered post HTML so code blocks display
+ * cleanly in RSS readers (which have no access to the site's CSS).
+ *
+ * The custom highlighter in svelte.config.js wraps each line as:
+ *   <span class="line"><span class="ln">N</span>…prism tokens…</span>
+ * and wraps the whole block in <pre class="… line-numbers">.
+ *
+ * Here we:
+ *  1. Detect line-numbered <code> blocks and reconstruct them as plain newline-
+ *     separated text (one line per <span class="line">).
+ *  2. Strip all remaining <span> tags (Prism token colours – useless without CSS).
+ *  3. Remove the now-redundant "line-numbers" class from <pre>.
+ */
+function cleanCodeForRss(html: string): string {
+	return html
+		.replace(/(<code[^>]*>)([\s\S]*?)(<\/code>)/g, (_, open, content, close) => {
+			let text = content;
+
+			if (text.includes('<span class="line">')) {
+				// Rebuild as plain lines: split on opening .line span, strip the
+				// line-number span and the trailing .line closing tag, rejoin with \n.
+				text = text
+					.split('<span class="line">')
+					.filter(Boolean)
+					.map((chunk) =>
+						chunk
+							.replace(/^<span class="ln">\d+<\/span>/, '') // line number
+							.replace(/<\/span>\s*$/, '') // .line closing tag
+					)
+					.join('\n');
+			}
+
+			// Strip all remaining <span> tags (Prism syntax tokens)
+			text = text.replace(/<\/?span[^>]*>/g, '');
+
+			return open + text + close;
+		})
+		.replace(/(<pre\b[^>]*?)\s*\bline-numbers\b/g, '$1');
+}
+
 export const GET: RequestHandler = async () => {
 	const posts = await getPosts();
 
@@ -25,7 +66,7 @@ export const GET: RequestHandler = async () => {
 		Object.entries(modules).map(([path, mod]) => {
 			const slug = path.replace('/src/posts/', '').replace('.md', '');
 			const { html } = mod.default.render();
-			return [slug, html];
+			return [slug, cleanCodeForRss(html)];
 		})
 	);
 
