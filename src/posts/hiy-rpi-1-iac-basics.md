@@ -57,7 +57,8 @@ Your task: Choose one of the following apps, create a `compose.yml` file like th
 | [vert](https://vert.sh/)                            | File Converter           | [VERT-sh/VERT](https://github.com/VERT-sh/VERT)                       |
 | [scribble-rs](https://scribblers.bios-marcel.link/) | Scribble Game            | [scribble-rs/scribble.rs](https://github.com/scribble-rs/scribble.rs) |
 
-> [!TIP]
+> **Hinweis:**
+>
 > You need to change:
 > - The service name in the second line (any value),
 > - The image in the third line (according to the GitHub repository),

@@ -237,11 +237,20 @@ img, svg {
   background: rgba(127, 176, 134, 0.06);
   margin: 1.5rem 0;
   padding: 1rem 1.25rem;
+  font-family: "Inter", system-ui, sans-serif;
+  font-style: normal;
+  font-size: 0.9375rem;
+  color: #9aa39c;
+  line-height: 1.65;
+}
+/* Optional callout title: > **Heading** … */
+.prose blockquote strong {
+  display: inline;
   font-family: "Instrument Serif", Georgia, serif;
   font-style: italic;
-  font-size: 1.25rem;
+  font-weight: 400;
+  font-size: 1.125rem;
   color: #e8e6dc;
-  line-height: 1.45;
 }
 
 .prose ul, .prose ol {
@@ -263,6 +272,8 @@ img, svg {
 
 /* ── Tables ── */
 .prose table {
+  display: block;      /* makes the element its own scroll container */
+  overflow-x: auto;   /* table scrolls horizontally, page does not */
   width: 100%;
   border-collapse: collapse;
   margin: 1.75rem 0;
