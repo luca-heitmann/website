@@ -1,8 +1,7 @@
 <script lang="ts">
 	import Blobs from '$lib/components/Blobs.svelte';
 	import Nav from '$lib/components/Nav.svelte';
-
-	const email = ["mail", "(at)", "luca-heitmann", ".", "de"].join("");
+	import ObfuscatedEmail from '$lib/components/ObfuscatedEmail.svelte';
 </script>
 
 <svelte:head>
@@ -49,7 +48,7 @@
 			<ul>
 				<li>
 					<strong>Email:</strong>
-					<p>mail (at) luca-heitmann.de</p>
+					<ObfuscatedEmail />
 				</li>
 				<li>
 					<strong>GitHub:</strong>
